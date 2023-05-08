@@ -1,6 +1,12 @@
 [
     {
-        "title":"Test Title",
-        "text":"Test text"
+        "id": "7ff8dfbc-414b-4c78-b2c0-cf904d75a474",
+        "title": "Turn in challenge 9",
+        "text": "deploy on heroku and submit for grading"
+    },
+    {
+        "id": "50e32eb4-f6b6-4883-8482-85a7469e198c",
+        "title": "Study more coding!",
+        "text": "all day every day!"
     }
 ]

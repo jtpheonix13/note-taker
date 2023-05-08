@@ -18,11 +18,6 @@ app.get('/notes', (req, res) => {
     res.sendFile(path.join(__dirname, '/public/notes.html'));
 });
 
-// route for the index.html file
-app.get('/*', (req, res) => {
-    res.sendFile(path.join(__dirname, '/public/index.html'));
-});
-
 // * API ROUTES *
 
 // this app.get route will return the db.json notes 
@@ -40,12 +35,15 @@ app.get('/api/notes', async(req, res) => {
 });
 
 // this app.get route will add new notes to the list
-app.post('api/notes', async(req, res) => {
+app.post('/api/notes', async(req, res) => {
     try {
+
+        const { title, text} = req.body;
 
         const newNote = {
             id: uuidv4(),
-            ...req.body
+            title,
+            text
         }
 
         await readAndAppend(newNote, './db/db.json');
@@ -58,7 +56,7 @@ app.post('api/notes', async(req, res) => {
 });
 
 // app.delete rout to delete notes based off of the generated id
-app.delete('api/notes/:id', async(req, res) => {
+app.delete('/api/notes/:id', async(req, res) => {
     try {
 
         const noteToDelete = req.params.id;
@@ -70,12 +68,17 @@ app.delete('api/notes/:id', async(req, res) => {
             return id.id !== noteToDelete;
         });
 
-        await writeToFile('./db/db.json');
+        await writeToFile('./db/db.json', removedNote);
 
         res.json(removedNote);
     } catch(err) {
         res.json(err);
     }
+});
+
+// route for the index.html file
+app.get('/*', (req, res) => {
+    res.sendFile(path.join(__dirname, '/public/index.html'));
 });
 
 
